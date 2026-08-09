@@ -1,7 +1,8 @@
-import type { ReactNode } from 'react'
+import { Suspense, type ReactNode } from 'react'
 
 import { getYouTubeVideoId, isPlainUrlText } from '@/lib/youtube'
 
+import MDLinkCard, { MDLinkCardFallback } from './md-link-card'
 import MDYouTubeEmbed from './md-youtube-embed'
 
 type MDAnchorProps = {
@@ -13,6 +14,14 @@ const MDAnchor = ({ href, children, ...props }: MDAnchorProps) => {
   const youtubeVideoId = getYouTubeVideoId(href)
   if (youtubeVideoId && isPlainUrlText(children, href)) {
     return <MDYouTubeEmbed videoId={youtubeVideoId} />
+  }
+
+  if (href && isPlainUrlText(children, href)) {
+    return (
+      <Suspense fallback={<MDLinkCardFallback href={href} />}>
+        <MDLinkCard href={href} />
+      </Suspense>
+    )
   }
 
   const isHeading = href?.startsWith('#')
