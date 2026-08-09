@@ -1,3 +1,5 @@
+import { unstable_cache } from 'next/cache'
+
 const MAX_HTML_BYTES = 512 * 1024
 const REQUEST_TIMEOUT_MS = 8_000
 const REVALIDATE_SECONDS = 24 * 60 * 60
@@ -121,16 +123,15 @@ const parseHttpUrl = (value: string) => {
   return url
 }
 
-// URLs come from repository-owned Markdown. Do not expose this as an arbitrary URL proxy.
-export const fetchLinkCardMetadata = async (value: string) => {
+const fetchMetadata = async (value: string) => {
   const url = parseHttpUrl(value)
   const response = await fetch(url, {
+    cache: 'no-store',
     headers: {
       Accept: 'text/html,application/xhtml+xml',
       'User-Agent': 'GanaLinkCard/1.0 (+https://gananana.me)'
     },
-    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-    next: { revalidate: REVALIDATE_SECONDS }
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
   })
 
   if (!response.ok) throw new Error(`Upstream returned ${response.status}`)
@@ -143,3 +144,8 @@ export const fetchLinkCardMetadata = async (value: string) => {
   const html = (await response.text()).slice(0, MAX_HTML_BYTES)
   return parseLinkCardHtml(html, response.url || url.toString())
 }
+
+// URLs come from repository-owned Markdown. Do not expose this as an arbitrary URL proxy.
+export const fetchLinkCardMetadata = unstable_cache(fetchMetadata, ['link-card-metadata'], {
+  revalidate: REVALIDATE_SECONDS
+})
