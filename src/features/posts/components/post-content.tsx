@@ -1,4 +1,6 @@
-import { MarkdownAsync } from 'react-markdown'
+'use client'
+
+import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
@@ -9,12 +11,16 @@ type PostContentProps = {
   content: string
 }
 
-const PostContent = ({ content }: PostContentProps) =>
-  MarkdownAsync({
-    children: content,
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypeRaw, rehypeSlug],
-    components: markdownComponents
-  })
+const PostContent = ({ content }: PostContentProps) => {
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeRaw, rehypeSlug]}
+      components={markdownComponents}
+    >
+      {content}
+    </ReactMarkdown>
+  )
+}
 
 export default PostContent
