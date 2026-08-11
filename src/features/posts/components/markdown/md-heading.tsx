@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { isValidElement, type ReactNode } from 'react'
 
 import { toHashHref, toHeadingId } from '@/lib/heading'
 
@@ -25,22 +25,30 @@ type MDHeadingProps = {
   id?: string
 }
 
+const getTextContent = (node: ReactNode): string => {
+  if (typeof node === 'string' || typeof node === 'number') return String(node)
+  if (Array.isArray(node)) return node.map(getTextContent).join('')
+  if (isValidElement<{ children?: ReactNode }>(node)) return getTextContent(node.props.children)
+  return ''
+}
+
 export const MDHeading = ({ level, children, id }: MDHeadingProps) => {
-  const text = String(children)
+  const text = getTextContent(children)
   // rehype-slugから渡されたIDがあればそれを使う、なければ自分で生成
   const slug = id || toHeadingId(text)
 
   const Tag = `h${level}` as const
 
   return (
-    <Tag id={slug} className={headingClassName(level)}>
+    <Tag id={slug} aria-label={text || undefined} className={headingClassName(level)}>
       <a
         href={toHashHref(slug)}
-        aria-label={`To heading: ${text}`}
-        className="block pl-6 no-underline transition-opacity duration-200 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:text-gray-400 before:opacity-0 before:transition-opacity before:duration-200 before:content-['#'] hover:opacity-80 group-hover:before:opacity-100 group-focus-within:before:opacity-100 dark:before:text-gray-500"
+        aria-label="To this heading"
+        className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-400 no-underline opacity-0 transition-opacity duration-200 hover:opacity-80 group-hover:opacity-100 group-focus-within:opacity-100 dark:text-gray-500"
       >
-        {children}
+        #
       </a>
+      <span className="block pl-6">{children}</span>
     </Tag>
   )
 }

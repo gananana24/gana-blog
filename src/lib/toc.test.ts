@@ -87,6 +87,12 @@ describe('generateToc', () => {
     ])
   })
 
+  it('uses the label of a linked heading for its text and ID', () => {
+    const result = generateToc('## [Linked heading](https://example.com)')
+
+    expect(result).toEqual([{ id: 'linked-heading', text: 'Linked heading', level: 2 }])
+  })
+
   it('should handle headings with special characters', () => {
     const content = `
 ## Hello, World!

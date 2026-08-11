@@ -25,6 +25,13 @@ const getUniqueHeadingId = (baseId: string, idCounts: Map<string, number>): stri
   return nextId
 }
 
+const toPlainHeadingText = (value: string) =>
+  value
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/[`*_~]/g, '')
+    .trim()
+
 /**
  * Markdownコンテンツから目次を生成
  */
@@ -42,7 +49,7 @@ export function generateToc(content: string): TocItem[] {
   match = headingRegex.exec(contentWithoutCodeBlocks)
   while (match !== null) {
     const level = match[1].length // ## = 2, ### = 3
-    const text = match[2].trim()
+    const text = toPlainHeadingText(match[2])
     const id = getUniqueHeadingId(toHeadingId(text), idCounts)
 
     toc.push({
