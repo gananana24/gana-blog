@@ -19,7 +19,7 @@ const AboutContent = () => {
             width={ICON_SIZE}
             height={ICON_SIZE}
             priority
-            className="rounded-full border border-gray-300 dark:border-gray-600"
+            className="rounded-full"
           />
           <div className="space-y-4 text-gray-800 dark:text-gray-200">
             <p>
