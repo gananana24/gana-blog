@@ -13,13 +13,15 @@ type PostContentProps = {
 
 const PostContent = ({ content }: PostContentProps) => {
   return (
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeRaw, rehypeSlug]}
-      components={markdownComponents}
-    >
-      {content}
-    </ReactMarkdown>
+    <div className="mx-auto w-full max-w-prose text-base leading-8">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw, rehypeSlug]}
+        components={markdownComponents}
+      >
+        {content}
+      </ReactMarkdown>
+    </div>
   )
 }
 

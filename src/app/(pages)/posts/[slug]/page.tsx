@@ -96,7 +96,7 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
         {JSON.stringify(breadcrumbStructuredData)}
       </Script>
 
-      <article>
+      <article className="font-sans">
         <Breadcrumb items={breadcrumbItems} />
         <header className="border-b border-gray-300 dark:border-gray-600 mb-12">
           <div className="flex flex-col items-center gap-8 pb-8">
@@ -108,7 +108,7 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
                 height={64}
               />
             ) : null}
-            <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+            <h1 className="max-w-2xl text-balance text-center text-2xl font-semibold leading-normal text-gray-900 sm:text-3xl dark:text-gray-100">
               {post.title}
             </h1>
             <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">

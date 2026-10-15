@@ -29,7 +29,7 @@ const MDCodeBlock = ({ className, children, ...props }: CodeBlockProps) => {
         type="button"
         onClick={handleCopy}
         className="cursor-pointer absolute top-3 right-3 p-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
-        aria-label="Copy code"
+        aria-label={copied ? 'Code copied' : 'Copy code'}
       >
         {copied ? (
           <Check size={16} className="text-green-400" />
@@ -37,13 +37,16 @@ const MDCodeBlock = ({ className, children, ...props }: CodeBlockProps) => {
           <Copy size={16} className="text-gray-300" />
         )}
       </button>
+      <span className="sr-only" aria-live="polite">
+        {copied ? 'Code copied' : ''}
+      </span>
       <SyntaxHighlighter
         style={{
           ...oneDark,
           'code[class*="language-"]': {
             color: '#f3f4f6',
-            fontSize: '0.9rem',
-            lineHeight: '1'
+            fontSize: '0.875rem',
+            lineHeight: '1.5rem'
           },
           'pre[class*="language-"]': {
             borderRadius: '1rem',

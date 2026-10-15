@@ -6,14 +6,14 @@ type MDListProps = {
 
 export const MDUnorderedList = ({ children }: MDListProps) => {
   return (
-    <ul className="list-disc pl-6 space-y-3 mb-6 [&_ul]:list-disc [&>li>ul]:my-2 [&_li:has(input[type=checkbox])]:list-none">
+    <ul className="mb-7 list-disc space-y-3 pl-7 marker:text-gray-500 [&_ul]:list-disc [&>li>ul]:my-3 [&_li:has(input[type=checkbox])]:list-none">
       {children}
     </ul>
   )
 }
 
 export const MDOrderedList = ({ children }: MDListProps) => {
-  return <ol className="list-decimal pl-6 space-y-3 mb-6">{children}</ol>
+  return <ol className="mb-7 list-decimal space-y-3 pl-7 marker:text-gray-600">{children}</ol>
 }
 
 type MDListItemProps = LiHTMLAttributes<HTMLLIElement> & {
@@ -23,7 +23,7 @@ type MDListItemProps = LiHTMLAttributes<HTMLLIElement> & {
 export const MDListItem = ({ children, ...props }: MDListItemProps) => {
   return (
     <li
-      className="leading-8 text-gray-800 dark:text-gray-200 [&>input[type=checkbox]]:mr-2 [&>input[type=checkbox]]:w-4 [&>input[type=checkbox]]:h-4 [&>input[type=checkbox]]:align-middle [&>input[type=checkbox]]:cursor-pointer [&>input[type=checkbox]]:accent-blue-600 [&:has(input[type=checkbox]:checked)]:text-gray-500 [&:has(input[type=checkbox]:checked)]:line-through [&:has(input[type=checkbox]:checked)]:dark:text-gray-500"
+      className="text-gray-800 dark:text-gray-200 [&>input[type=checkbox]]:mr-2 [&>input[type=checkbox]]:h-4 [&>input[type=checkbox]]:w-4 [&>input[type=checkbox]]:cursor-pointer [&>input[type=checkbox]]:align-middle [&>input[type=checkbox]]:accent-blue-600 [&:has(input[type=checkbox]:checked)]:text-gray-500 [&:has(input[type=checkbox]:checked)]:line-through [&:has(input[type=checkbox]:checked)]:dark:text-gray-500"
       {...props}
     >
       {children}

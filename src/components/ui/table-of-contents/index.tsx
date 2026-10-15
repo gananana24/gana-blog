@@ -111,7 +111,7 @@ const TableOfContents = ({ items }: TableOfContentsProps) => {
   if (items.length === 0) return null
 
   return (
-    <nav ref={navRef} aria-label="目次" className="text-xs">
+    <nav ref={navRef} aria-label="Table of contents" className="text-sm">
       <p className="mb-3 text-gray-400">ON THIS PAGE</p>
 
       <ul>
